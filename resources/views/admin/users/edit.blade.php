@@ -1,16 +1,22 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Editar o Usuário')
+@section('title', 'Editar')
 
 @section('content')
-    @include('admin.users.partials.breadcrumb')
-    <div class="py-6">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
-            Editar o Usuário {{ $user->name }}
-        </h2>
-    </div>
-    <form action="{{ route('users.update', $user->id) }}" method="POST">
-        @method('put')
-        @include('admin.users.partials.form')
-    </form>
+<h1>Editar Usuário</h1>
+
+<!-- Componente alerta, pega do arquivo alert.blade x-(...) -->
+<x-alert/>
+
+<form action="{{ route('users.update', $user['id']) }}" method="POST">
+    <!-- Precisa ter para validar o formulário -->
+    @csrf 
+    @method('PUT') <!-- Laravel entende que é um update -->
+    <input type="text" name="name" placeholder="Nome" value="{{ $user['name'] }}">
+    <input type="email" name="email" placeholder="Email" value="{{ $user['email'] }}">
+    <button type="submit">Editar</button>
+</form>
+
+<a href="{{ route('users.index') }}">Voltar</a>
+
 @endsection

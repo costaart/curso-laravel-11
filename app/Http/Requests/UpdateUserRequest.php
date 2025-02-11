@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,14 +14,17 @@ class UpdateUserRequest extends StoreUserRequest
      */
     public function rules(): array
     {
-        $rules = parent::rules();
-
-        $rules['password'] = [
-            'nullable',
-            'min:6',
-            'max:20',
+        return [
+            'name' => [
+                'required',
+                'min:3',
+                'max:255' 
+            ],
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($this->route('id')), // Certifique-se de passar o ID correto
+            ]
         ];
-
-        return $rules;
     }
 }

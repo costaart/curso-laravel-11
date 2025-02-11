@@ -1,16 +1,27 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Criar Novo Usuário')
+@section('title', 'Cadastrar')
 
 @section('content')
-    @include('admin.users.partials.breadcrumb')
+
     <div class="py-6">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4">
-            Novo Usuário
-        </h2>
+        <h2 class="font-semibold text-x text-gray-800">Novo Usuário</h2>
+
     </div>
-    {{-- @include('admin.includes.errors') --}}
-    <form action="{{ route('users.store') }}" method="POST">
-        @include('admin.users.partials.form')
-    </form>
+
+<!-- Componente alerta, pega do arquivo alert.blade x-(...) -->
+<x-alert/>
+
+<form action="{{ route('users.store') }}" method="POST">
+    <input type="text" name="name" placeholder="Nome" value="{{ old('name') }}">
+    <input type="email" name="email" placeholder="Email" value="{{ old('email') }}">
+    <input type="password" name="password" placeholder="Senha">
+
+    <button type="submit">Cadastrar</button>
+    @csrf 
+    <!-- Precisa ter para validar o formulário -->
+</form>
+
+<a href="{{ route('users.index') }}">Voltar</a>
+
 @endsection
